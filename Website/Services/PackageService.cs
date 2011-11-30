@@ -10,12 +10,13 @@ namespace NuGetGallery
 {
     public class PackageService : IPackageService
     {
-        readonly ICryptographyService cryptoSvc;
-        readonly IEntityRepository<PackageRegistration> packageRegistrationRepo;
-        readonly IEntityRepository<Package> packageRepo;
-        readonly IEntityRepository<PackageStatistics> packageStatsRepo;
-        readonly IPackageFileService packageFileSvc;
-        readonly IEntityRepository<PackageOwnerRequest> packageOwnerRequestRepository;
+        private readonly ICryptographyService cryptoSvc;
+        private readonly IEntityRepository<PackageRegistration> packageRegistrationRepo;
+        private readonly IEntityRepository<Package> packageRepo;
+        private readonly IEntityRepository<PackageStatistics> packageStatsRepo;
+        private readonly IPackageFileService packageFileSvc;
+        private readonly IEntityRepository<PackageOwnerRequest> packageOwnerRequestRepository;
+        private readonly IIndexingService indexingSvc;
 
         public PackageService(
             ICryptographyService cryptoSvc,
@@ -23,7 +24,8 @@ namespace NuGetGallery
             IEntityRepository<Package> packageRepo,
             IEntityRepository<PackageStatistics> packageStatsRepo,
             IPackageFileService packageFileSvc,
-            IEntityRepository<PackageOwnerRequest> packageOwnerRequestRepository)
+            IEntityRepository<PackageOwnerRequest> packageOwnerRequestRepository,
+            IIndexingService indexingSvc)
         {
             this.cryptoSvc = cryptoSvc;
             this.packageRegistrationRepo = packageRegistrationRepo;
@@ -31,6 +33,7 @@ namespace NuGetGallery
             this.packageStatsRepo = packageStatsRepo;
             this.packageFileSvc = packageFileSvc;
             this.packageOwnerRequestRepository = packageOwnerRequestRepository;
+            this.indexingSvc = indexingSvc;
         }
 
         public Package CreatePackage(IPackage nugetPackage, User currentUser)
@@ -52,7 +55,8 @@ namespace NuGetGallery
                     tx.Complete();
                 }
             }
-            
+
+ 
 
             return package;
         }

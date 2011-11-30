@@ -3,6 +3,7 @@ using System.Web.Mvc;
 using System.Web.Routing;
 using Elmah.Contrib.Mvc;
 using NuGetGallery.Migrations;
+using Ninject;
 
 [assembly: WebActivator.PreApplicationStartMethod(typeof(NuGetGallery.Bootstrapper), "Start")]
 namespace NuGetGallery
@@ -20,6 +21,16 @@ namespace NuGetGallery
             GlobalFilters.Filters.Add(new ElmahHandleErrorAttribute());
 
             ValueProviderFactories.Factories.Add(new HttpHeaderValueProviderFactory());
+
+            CreateIndexes();
+        }
+
+        private static void CreateIndexes()
+        {
+            var packageSvc = Container.Kernel.Get<IPackageService>();
+            var packages = packageSvc.GetLatestPackageVersions(allowPrerelease: true);
+            var indexingSvc = Container.Kernel.Get<IIndexingService>();
+            indexingSvc.CreateIndex(packages);
         }
 
         private static void UpdateDatabase()

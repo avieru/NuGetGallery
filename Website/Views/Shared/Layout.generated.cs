@@ -206,22 +206,12 @@ WriteLiteral("\" method=\"get\">\r\n                        <input name=\"q\" id
             #line default
             #line hidden
 WriteLiteral("\" />\r\n                        <input id=\"searchBoxSubmit\" type=\"submit\" value=\" \"" +
-" />\r\n                        <input type=\"hidden\" name=\"sortOrder\" value=\"");
-
-
-            
-            #line 35 "..\..\Views\Shared\Layout.cshtml"
-                                                                Write(Const.DefaultPackageListSortOrder);
-
-            
-            #line default
-            #line hidden
-WriteLiteral("\" />\r\n                    </form>\r\n                </div>\r\n            </nav>\r\n  " +
+" />\r\n                    </form>\r\n                </div>\r\n            </nav>\r\n  " +
 "          <div id=\"body\">\r\n");
 
 
             
-            #line 40 "..\..\Views\Shared\Layout.cshtml"
+            #line 39 "..\..\Views\Shared\Layout.cshtml"
              if (TempData.ContainsKey("Message")) {
 
             
@@ -231,7 +221,7 @@ WriteLiteral("                <p class=\"message\">");
 
 
             
-            #line 41 "..\..\Views\Shared\Layout.cshtml"
+            #line 40 "..\..\Views\Shared\Layout.cshtml"
                               Write(TempData["Message"]);
 
             
@@ -241,7 +231,7 @@ WriteLiteral("</p>\r\n");
 
 
             
-            #line 42 "..\..\Views\Shared\Layout.cshtml"
+            #line 41 "..\..\Views\Shared\Layout.cshtml"
             }
 
             
@@ -251,7 +241,7 @@ WriteLiteral("            ");
 
 
             
-            #line 43 "..\..\Views\Shared\Layout.cshtml"
+            #line 42 "..\..\Views\Shared\Layout.cshtml"
        Write(RenderBody());
 
             
@@ -286,7 +276,7 @@ WriteLiteral(@"
 
 
             
-            #line 68 "..\..\Views\Shared\Layout.cshtml"
+            #line 67 "..\..\Views\Shared\Layout.cshtml"
                           Write(DateTime.UtcNow.Year);
 
             
@@ -297,7 +287,7 @@ WriteLiteral(" Outercurve Foundation.\r\n                    </p>\r\n           
 
 
             
-            #line 73 "..\..\Views\Shared\Layout.cshtml"
+            #line 72 "..\..\Views\Shared\Layout.cshtml"
                 Write(Url.Content("~/Scripts/jquery-1.6.2.min.js"));
 
             
@@ -307,7 +297,7 @@ WriteLiteral("\"></script>\r\n        ");
 
 
             
-            #line 74 "..\..\Views\Shared\Layout.cshtml"
+            #line 73 "..\..\Views\Shared\Layout.cshtml"
    Write(RenderSection("BottomScripts", required: false));
 
             
