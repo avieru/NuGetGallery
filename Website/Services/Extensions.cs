@@ -5,10 +5,9 @@ namespace NuGetGallery
 {
     public static class Extensions
     {
-        public static PackageSearchResults Search(this IQueryable<Package> source, string searchTerm)
+        public static PackageSearchResults Search(this IQueryable<Package> source, IIndexingService indexingService, string searchTerm)
         {
-            var service = Container.Kernel.Get<IIndexingService>();
-            var ids = service.Search(searchTerm);
+            var ids = indexingService.Search(searchTerm);
             var results = source.Where(s => ids.Contains(s.Key));
 
             return new PackageSearchResults { Packages = results, RankedKeys = ids };

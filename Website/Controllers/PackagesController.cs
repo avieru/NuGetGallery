@@ -16,24 +16,27 @@ namespace NuGetGallery
         // TODO: add support for uploading logos and screenshots
         // TODO: improve validation summary emphasis
 
-        readonly ICryptographyService cryptoSvc;
-        readonly IPackageService packageSvc;
-        readonly IUploadFileService uploadFileSvc;
-        readonly IUserService userSvc;
-        readonly IMessageService messageService;
+        private readonly ICryptographyService cryptoSvc;
+        private readonly IPackageService packageSvc;
+        private readonly IUploadFileService uploadFileSvc;
+        private readonly IUserService userSvc;
+        private readonly IMessageService messageService;
+        private readonly IIndexingService indexingSvc;
 
         public PackagesController(
             ICryptographyService cryptoSvc,
             IPackageService packageSvc,
             IUploadFileService uploadFileSvc,
             IUserService userSvc,
-            IMessageService messageService)
+            IMessageService messageService,
+            IIndexingService indexingSvc)
         {
             this.cryptoSvc = cryptoSvc;
             this.packageSvc = packageSvc;
             this.uploadFileSvc = uploadFileSvc;
             this.userSvc = userSvc;
             this.messageService = messageService;
+            this.indexingSvc = indexingSvc;
         }
 
         [Authorize]
@@ -145,7 +148,7 @@ namespace NuGetGallery
 
             if (!String.IsNullOrEmpty(q))
             {
-                PackageSearchResults searchResults = packageVersions.Search(q);
+                PackageSearchResults searchResults = packageVersions.Search(indexingSvc, q);
                 if (String.IsNullOrEmpty(sortOrder))
                 {
                     packageVersions = searchResults.SortByRelevance();

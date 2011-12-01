@@ -17,8 +17,8 @@ namespace NuGetGallery
 
         }
 
-        public V2Feed(IEntityRepository<Package> repo, IConfiguration configuration)
-            : base(repo, configuration)
+        public V2Feed(IEntityRepository<Package> repo, IConfiguration configuration, IIndexingService indexingSvc)
+            : base(repo, configuration, indexingSvc)
         {
 
         }
@@ -47,7 +47,7 @@ namespace NuGetGallery
                 return packages.ToV2FeedPackageQuery(Configuration.SiteRoot);
             }
 
-            var results = packages.Search(searchTerm);
+            var results = packages.Search(IndexingService, searchTerm);
             return results.SortByRelevance().ToV2FeedPackageQuery(Configuration.SiteRoot);
         }
 

@@ -16,8 +16,8 @@ namespace NuGetGallery
 
         }
 
-        public V1Feed(IEntityRepository<Package> repo, IConfiguration configuration)
-            : base(repo, configuration)
+        public V1Feed(IEntityRepository<Package> repo, IConfiguration configuration, IIndexingService indexingSvc)
+            : base(repo, configuration, indexingSvc)
         {
 
         }
@@ -58,7 +58,7 @@ namespace NuGetGallery
             {
                 return packages.ToV1FeedPackageQuery(Configuration.SiteRoot);
             }
-            return packages.Search(searchTerm)
+            return packages.Search(IndexingService, searchTerm)
                            .SortByRelevance()
                            .ToV1FeedPackageQuery(Configuration.SiteRoot);
         }

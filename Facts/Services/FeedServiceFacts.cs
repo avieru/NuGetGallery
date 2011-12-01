@@ -19,7 +19,8 @@ namespace NuGetGallery.Services
             }.AsQueryable());
             var configuration = new Mock<IConfiguration>(MockBehavior.Strict);
             configuration.SetupGet(c => c.SiteRoot).Returns("https://localhost:8081/");
-            var v1Service = new V1Feed(repo.Object, configuration.Object);
+            var indexingService = new Mock<IIndexingService>(MockBehavior.Strict);
+            var v1Service = new V1Feed(repo.Object, configuration.Object, indexingService.Object);
 
             // Act
             var result = v1Service.Search(null, null);
@@ -44,7 +45,8 @@ namespace NuGetGallery.Services
             }.AsQueryable());
             var configuration = new Mock<IConfiguration>(MockBehavior.Strict);
             configuration.SetupGet(c => c.SiteRoot).Returns("http://test.nuget.org/");
-            var v1Service = new V1Feed(repo.Object, configuration.Object);
+            var indexingService = new Mock<IIndexingService>(MockBehavior.Strict);
+            var v1Service = new V1Feed(repo.Object, configuration.Object, indexingService.Object);
 
             // Act
             var result = v1Service.Search(null, null);
@@ -70,7 +72,9 @@ namespace NuGetGallery.Services
             }.AsQueryable());
             var configuration = new Mock<IConfiguration>(MockBehavior.Strict);
             configuration.SetupGet(c => c.SiteRoot).Returns("https://staged.nuget.org/");
-            var v2Service = new V2Feed(repo.Object, configuration.Object);
+            var indexingService = new Mock<IIndexingService>(MockBehavior.Strict);
+            var v2Service = new V2Feed(repo.Object, configuration.Object, indexingService.Object);
+
 
             // Act
             var result = v2Service.Search(null, null, includePrerelease: false);

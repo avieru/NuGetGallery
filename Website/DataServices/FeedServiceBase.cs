@@ -16,19 +16,22 @@ namespace NuGetGallery
     {
         private readonly IEntityRepository<Package> packageRepo;
         private readonly IConfiguration configuration;
+        private readonly IIndexingService indexingSvc;
 
         public FeedServiceBase()
             : this(DependencyResolver.Current.GetService<IEntityRepository<Package>>(),
-                   DependencyResolver.Current.GetService<IConfiguration>())
+                   DependencyResolver.Current.GetService<IConfiguration>(),
+                   DependencyResolver.Current.GetService<IIndexingService>())
         {
             
         }
 
-        protected FeedServiceBase(IEntityRepository<Package> packageRepo, IConfiguration configuration)
+        protected FeedServiceBase(IEntityRepository<Package> packageRepo, IConfiguration configuration, IIndexingService indexingSvc)
         {
             // TODO: See if there is a way to do proper DI with data services
             this.packageRepo = packageRepo;
             this.configuration = configuration;
+            this.indexingSvc = indexingSvc;
         }
 
         protected IEntityRepository<Package> PackageRepo
@@ -41,10 +44,12 @@ namespace NuGetGallery
 
         protected IConfiguration Configuration
         {
-            get
-            {
-                return configuration;
-            }
+            get { return configuration; }
+        }
+
+        protected IIndexingService IndexingService
+        {
+            get { return indexingSvc; }
         }
 
         // This method is called only once to initialize service-wide policies.

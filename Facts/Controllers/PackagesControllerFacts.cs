@@ -1085,7 +1085,7 @@ namespace NuGetGallery
             }
         }
 
-        static PackagesController CreateController(
+        private static PackagesController CreateController(
             Mock<ICryptographyService> cryptoSvc = null,
             Mock<IPackageService> packageSvc = null,
             Mock<IUploadFileService> uploadFileSvc = null,
@@ -1094,6 +1094,7 @@ namespace NuGetGallery
             Mock<HttpContextBase> httpContext = null,
             Mock<IIdentity> fakeIdentity = null,
             Mock<IPackage> fakeNuGetPackage = null,
+            Mock<IIndexingService> indexingService = null,
             Exception readPackageException = null)
         {
 
@@ -1102,13 +1103,15 @@ namespace NuGetGallery
             uploadFileSvc = uploadFileSvc ?? new Mock<IUploadFileService>();
             userSvc = userSvc ?? new Mock<IUserService>();
             messageSvc = messageSvc ?? new Mock<IMessageService>();
+            indexingService = indexingService ?? new Mock<IIndexingService>();
 
             var controller = new Mock<PackagesController>(
                 cryptoSvc.Object,
                     packageSvc.Object,
                     uploadFileSvc.Object,
                     userSvc.Object,
-                    messageSvc.Object);
+                    messageSvc.Object,
+                    indexingService.Object);
             controller.CallBase = true;
 
             if (httpContext != null)
